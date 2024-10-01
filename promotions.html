@@ -4,38 +4,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ceylon Burgers POS Orders</title>
+    <title>Ceylon Burgers POS Promotions</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
 
     <div class="d-flex">
+        <!-- Sidebar -->
         <div class="bg-dark text-white" style="width: 250px; height: 100vh; position: fixed;">
             <div class="p-3">
                 <h4 class="text-center">Menu</h4>
                 <a href="index.html" class="text-white text-decoration-none d-block py-2">Dashboard</a>
-                <a href="orders.html" class="text-white text-decoration-none d-block py-2 active">Orders</a>
+                <a href="orders.html" class="text-white text-decoration-none d-block py-2">Orders</a>
                 <a href="items.html" class="text-white text-decoration-none d-block py-2">Food Items</a>
                 <a href="inventory.html" class="text-white text-decoration-none d-block py-2">Inventory</a>
-                <a class="text-white text-decoration-none d-block py-2 active" onclick="location.reload();">Promotions</a>
+                <a class="text-white text-decoration-none d-block py-2 bg-primary fw-bold active" onclick="location.reload();">Promotions</a>
                 <a href="reports.html" class="text-white text-decoration-none d-block py-2">Reports</a>
             </div>
         </div>
 
+        <!-- Main Content -->
         <div class="content flex-grow-1" style="margin-left: 250px;">
             <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="#">Ceylon Burgers POS</a>
                     <form class="d-flex ms-auto" role="search">
-                        <input class="form-control me-2" type="search" placeholder="Search items..."
-                            aria-label="Search">
+                        <input class="form-control me-2" type="search" placeholder="Search items..." aria-label="Search">
                         <button class="btn btn-outline-light" type="submit">Search</button>
                     </form>
                 </div>
             </nav>
+
+            <div class="container mt-4">
+                <h2 class="text-center mb-4">Today's Special Promotions</h2>
+
+                <!-- Today's Specials Section -->
+                <h4>Today's Specials</h4>
+                <div class="row">
+                    <!-- Special Item 1 -->
+                    <div class="col-md-4 mb-4">
+                        <div class="card text-white bg-success">
+                            <div class="card-body">
+                                <h5 class="card-title">Classic Burger</h5>
+                                <p class="card-text">Now only LKR 350!</p>
+                                <p class="card-text"><small class="text-light">Limited time offer</small></p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Special Item 2 -->
+                    <div class="col-md-4 mb-4">
+                        <div class="card text-white bg-warning">
+                            <div class="card-body">
+                                <h5 class="card-title">Cheese Submarine</h5>
+                                <p class="card-text">Now only LKR 400!</p>
+                                <p class="card-text"><small class="text-light">Limited time offer</small></p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Special Item 3 -->
+                    <div class="col-md-4 mb-4">
+                        <div class="card text-white bg-info">
+                            <div class="card-body">
+                                <h5 class="card-title">Coke</h5>
+                                <p class="card-text">Buy one get one free!</p>
+                                <p class="card-text"><small class="text-light">Limited time offer</small></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Price Drops Section -->
+                <h4 class="mt-5">Price Drops</h4>
+                <div class="row">
+                    <!-- Price Drop Item 1 -->
+                    <div class="col-md-4 mb-4">
+                        <div class="card text-white bg-danger">
+                            <div class="card-body">
+                                <h5 class="card-title">Chocolate Cake</h5>
+                                <p class="card-text">Now only LKR 250 (was LKR 300)</p>
+                                <p class="card-text"><small class="text-light">Price drop!</small></p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Price Drop Item 2 -->
+                    <div class="col-md-4 mb-4">
+                        <div class="card text-white bg-secondary">
+                            <div class="card-body">
+                                <h5 class="card-title">Orange Juice</h5>
+                                <p class="card-text">Now only LKR 150 (was LKR 200)</p>
+                                <p class="card-text"><small class="text-light">Price drop!</small></p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Price Drop Item 3 -->
+                    <div class="col-md-4 mb-4">
+                        <div class="card text-white bg-primary">
+                            <div class="card-body">
+                                <h5 class="card-title">Fries</h5>
+                                <p class="card-text">Now only LKR 100 (was LKR 150)</p>
+                                <p class="card-text"><small class="text-light">Price drop!</small></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
