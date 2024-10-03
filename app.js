@@ -710,7 +710,7 @@ function updatePasswordPlaceholder() {
     errorMessage.textContent = '';
 
     if (role === 'admin' && password === 'CBA@2004') {
-      window.location.href = 'admin-dashboard.html';
+      window.location.href = 'admin/admin.html';
     } else if (role === 'cashier' && password === 'CBC@2004') {
       window.location.href = 'cashier/cashier.html';
     } else {

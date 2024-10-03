@@ -1,7 +1,7 @@
 function loadOrders() {
     const orders = JSON.parse(localStorage.getItem("OrderHistory")) || [];
     const ordersContainer = document.getElementById('ordersContainer');
-    ordersContainer.innerHTML = ''; // Clear existing content
+    ordersContainer.innerHTML = ''; 
 
     orders.forEach((order, index) => {
         const card = document.createElement('div');
