@@ -22,20 +22,17 @@
 <body>
 
     <div class="d-flex">
-        <!-- Sidebar -->
         <div class="bg-dark text-white" style="width: 250px; height: 100vh; position: fixed;">
             <div class="p-3">
                 <h4 class="text-center">Menu</h4>
-                <a href="index.html" class="text-white text-decoration-none d-block py-2">Dashboard</a>
+                <a href="cashier.html" class="text-white text-decoration-none d-block py-2">Dashboard</a>
                 <a href="orders.html" class="text-white text-decoration-none d-block py-2">Orders</a>
                 <a href="items.html" class="text-white text-decoration-none d-block py-2">Food Items</a>
                 <a href="inventory.html" class="text-white text-decoration-none d-block py-2">Inventory</a>
-                <a href="promotions.html" class="text-white text-decoration-none d-block py-2">Promotions</a>
                 <a class="text-white text-decoration-none d-block py-2 bg-primary fw-bold active" onclick="location.reload();">Reports</a>
             </div>
         </div>
 
-        <!-- Main Content -->
         <div class="content flex-grow-1" style="margin-left: 250px;">
             <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
                 <div class="container-fluid">
@@ -50,14 +47,12 @@
             <div class="container mt-4">
                 <h2 class="text-center mb-4">Admin Reports</h2>
 
-                <!-- Password Protection Section -->
                 <div id="passwordForm" class="text-center mb-4">
                     <label for="password" class="form-label">Enter Password to Access Reports:</label>
                     <input type="password" id="password" class="form-control mb-2" placeholder="Password">
                     <button class="btn btn-primary" onclick="validatePassword()">Submit</button>
                 </div>
 
-                <!-- Reports Section (Initially Hidden) -->
                 <div id="reportSection" style="display: none;">
                     <h4>Daily Income Report</h4>
                     <p>Total Income: LKR 50,000</p>

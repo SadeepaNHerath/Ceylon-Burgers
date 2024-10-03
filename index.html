@@ -1,117 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ceylon Burgers POS Dashboard</title>
+  <title>Ceylon Burgers - Login</title>
+  <link rel="icon" href="icon/favicon.ico">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.css" rel="stylesheet">
 </head>
+
 <body>
 
-  <div class="d-flex">
-    <div class="bg-dark text-white" style="width: 250px; height: 100vh; position: fixed;">
-      <div class="p-3">
-        <h4 class="text-center">Menu</h4>
-        <a class="text-white text-decoration-none d-block py-2 bg-primary fw-bold active" onclick="location.reload();">Dashboard</a>
-        <a href="orders.html" class="text-white text-decoration-none d-block py-2">Orders</a>
-        <a href="items.html" class="text-white text-decoration-none d-block py-2">Food Items</a>
-        <a href="inventory.html" class="text-white text-decoration-none d-block py-2">Inventory</a>
-        <a href="promotions.html" class="text-white text-decoration-none d-block py-2">Promotions</a>
-        <a href="reports.html" class="text-white text-decoration-none d-block py-2">Reports</a>
+  <div class="container d-flex justify-content-center align-items-center vh-100" data-aos="fade-up">
+    <div class="card" style="width: 400px;">
+      <div class="card-body">
+        <h2 class="text-center mb-4">
+          <i class="fas fa-user-circle"></i> Login to Ceylon Burgers
+        </h2>
+        <div class="mb-3">
+          <label for="roleSelect" class="form-label">Select your role:</label>
+          <select id="roleSelect" class="form-select" onchange="updatePasswordPlaceholder()">
+            <option value="">Choose...</option>
+            <option value="admin">Admin</option>
+            <option value="cashier">Cashier</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password:</label>
+          <input type="password" class="form-control" id="password" placeholder="Enter password">
+        </div>
+        <div class="text-center">
+          <button class="btn btn-danger" onclick="checkLogin()">Login</button>
+        </div>
+        <div id="error-message" class="text-danger text-center mt-3"></div>
       </div>
-    </div>
-
-    <div class="content flex-grow-1" style="margin-left: 250px;">
-      <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">Ceylon Burgers POS</a>
-          <form class="d-flex ms-auto" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search items..." aria-label="Search">
-            <button class="btn btn-outline-light" type="submit">Search</button>
-          </form>
-        </div>
-      </nav>
-
-      <div class="container mt-4">
-        <div class="row">
-          <div class="col-md-4">
-            <div class="card text-center">
-              <div class="card-body">
-                <h5 class="card-title">Total Sales</h5>
-                <p class="card-text">LKR 45,000</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card text-center">
-              <div class="card-body">
-                <h5 class="card-title">Total Orders</h5>
-                <p class="card-text">55</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card text-center">
-              <div class="card-body">
-                <h5 class="card-title">Promotions Used</h5>
-                <p class="card-text">10</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card mt-4">
-          <div class="card-header">
-            Food Items
-            <button class="btn btn-primary float-end">Add New Item</button>
-          </div>
-          <div class="card-body">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>Item Code</th>
-                  <th>Name</th>
-                  <th>Category</th>
-                  <th>Price (LKR)</th>
-                  <th>Quantity</th>
-                  <th>Expiration Date</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>001</td>
-                  <td>Classic Burger</td>
-                  <td>Burgers</td>
-                  <td>450</td>
-                  <td>20</td>
-                  <td>2024-10-15</td>
-                  <td>
-                    <button class="btn btn-sm btn-warning">Edit</button>
-                    <button class="btn btn-sm btn-danger">Delete</button>
-                  </td>
-                </tr>
-                <tr class="text-danger">
-                  <td>002</td>
-                  <td>Cheese Submarine</td>
-                  <td>Submarines</td>
-                  <td>550</td>
-                  <td>10</td>
-                  <td>2024-09-30</td>
-                  <td>
-                    <button class="btn btn-sm btn-warning">Edit</button>
-                    <button class="btn btn-sm btn-danger">Delete</button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.js"></script>
+  <script src="app.js"></script>
+  <script>
+    AOS.init();
+  </script>
 </body>
 </html>

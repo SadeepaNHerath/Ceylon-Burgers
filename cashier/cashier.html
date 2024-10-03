@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ceylon Burgers - Cashier Dashboard</title>
+    <link rel="icon" href="../icon/favicon.ico">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        #suggestions {
+            display: none;
+            position: absolute;
+            background-color: white;
+            border: 1px solid #ccc;
+            width: 100%;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+
+        .list-group-item {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="d-flex">
+        <div class="bg-dark text-white" style="width: 250px; height: 100vh; position: fixed;">
+            <div class="p-3">
+                <h4 class="text-center">Menu</h4>
+                <a class="text-white text-decoration-none d-block py-2 bg-primary fw-bold active"
+                    onclick="location.reload();">Dashboard</a>
+                <a href="orders.html" class="text-white text-decoration-none d-block py-2">Orders</a>
+                <a href="items.html" class="text-white text-decoration-none d-block py-2">Food Items</a>
+            </div>
+        </div>
+
+        <div class="content flex-grow-1" style="margin-left: 250px;">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">Ceylon Burgers POS</a>
+                    <a href="../index.html" class="btn btn-outline-light ms-auto">Exit</a>
+                </div>
+            </nav>
+
+            <div class="container mt-4">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h5 class="card-title">Total Sales</h5>
+                                <p class="card-text" id="total-sales">LKR 0</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h5 class="card-title">Total Orders</h5>
+                                <p class="card-text" id="total-orders">0</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h5 class="card-title">Discount Items</h5>
+                                <p class="card-text" id="discount-items">0</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mt-4">
+                    <div class="card-header">
+                        Place an Order
+                    </div>
+                    <div class="card-body">
+                        <h5>Customer Information</h5>
+                        <div class="mb-3">
+                            <label for="customerPhone" class="form-label">Customer Phone or ID:</label>
+                            <div class="input-group">
+                                <input type="text" id="customerPhone" class="form-control" placeholder="Type phone number or customer ID" oninput="suggestCustomers()">
+                            </div>
+                            <ul id="customerSuggestions" class="list-group" style="display: none;"></ul>
+                        </div>
+
+                        <div class="form-check mb-3">
+                            <input type="checkbox" class="form-check-input" id="newCustomerCheckbox" onchange="toggleNewCustomerForm()">
+                            <label class="form-check-label" for="newCustomerCheckbox">New Customer</label>
+                        </div>
+
+                        <div id="newCustomerForm" style="display: none;">
+                            <div class="mb-3">
+                                <label for="customerName" class="form-label">Customer Name:</label>
+                                <input type="text" id="customerName" class="form-control" placeholder="Enter customer name">
+                            </div>
+                            <div class="mb-3">
+                                <label for="customerPhoneNew" class="form-label">Customer Phone:</label>
+                                <input type="text" id="customerPhoneNew" class="form-control" placeholder="Enter customer phone">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="itemInput" class="form-label">Item Code or Name:</label>
+                            <div class="input-group">
+                                <input type="text" id="itemInput" class="form-control" placeholder="Type food name or ID" oninput="suggestItems()">
+                            </div>
+                            <ul id="suggestions" class="list-group" style="display: none; position: absolute; z-index: 1000;"></ul>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="quantity" class="form-label">Quantity:</label>
+                            <div class="input-group">
+                                <input type="number" id="quantity" value="1" min="1">
+                                <button class="btn btn-outline-secondary" type="button" onclick="incrementQuantity()">+</button>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary" onclick="addItemToOrder()">Add Item</button>
+
+                        <h5 class="mt-4">Order Summary</h5>
+                        <ul class="list-group mb-3" id="order-summary"></ul>
+
+                        <div class="d-flex justify-content-between">
+                            <span>Total: LKR <span id="order-total">0</span></span>
+                        </div>
+
+                        <div class="mb-3 mt-4">
+                            <label for="amountGiven" class="form-label">Amount Given by Customer:</label>
+                            <input type="number" id="amountGiven" class="form-control" placeholder="Enter amount received...">
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span>Change: LKR <span id="change-amount">0</span></span>
+                            <button class="btn btn-success" onclick="placeOrder()">Place Order</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="cashier.js"></script>
+</body>
+
+</html>
