@@ -27,6 +27,14 @@
           </select>
         </div>
         <div class="mb-3">
+          <label for="cashierSelect" class="form-label" id="cashierLabel" style="display: none;">Select Cashier:</label>
+          <select id="cashierSelect" class="form-select" style="display: none;" onchange="updatePasswordPlaceholder()">
+            <option value="">Choose...</option>
+            <option value="cashier1">Cashier 1</option>
+            <option value="cashier2">Cashier 2</option>
+          </select>
+        </div>
+        <div class="mb-3">
           <label for="password" class="form-label">Password:</label>
           <input type="password" class="form-control" id="password" placeholder="Enter password">
         </div>
@@ -40,8 +48,7 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.js"></script>
   <script src="app.js"></script>
-  <script>
-    AOS.init();
-  </script>
+  <script>AOS.init();</script>
 </body>
+
 </html>

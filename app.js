@@ -684,65 +684,60 @@ const orders = [
 localStorage.setItem("OrderHistory", JSON.stringify(orders));
 }
 
-
 const cashier = JSON.parse(localStorage.getItem("Cashiers")) || [];
 const customer = JSON.parse(localStorage.getItem("Customers")) || [];
 const orders = JSON.parse(localStorage.getItem("OrderHistory")) || [];
 
 function updatePasswordPlaceholder() {
-    const role = document.getElementById('roleSelect').value;
-    const passwordInput = document.getElementById('password');
+  const role = document.getElementById('roleSelect').value;
+  const passwordInput = document.getElementById('password');
 
-    if (role === 'admin') {
-      passwordInput.placeholder = 'Password: CBA@2004';
-    } else if (role === 'cashier') {
-      passwordInput.placeholder = 'Password: CBC@2004';
-    } else {
-      passwordInput.placeholder = 'Enter password';
-    }
+   passwordInput.placeholder = role === 'admin' ? 'Password: CBA@2004' : 'Password: CBC@2004';
+}
+
+function checkLogin() {
+  const role = document.getElementById('roleSelect').value;
+  const password = document.getElementById('password').value;
+  const errorMessage = document.getElementById('error-message');
+
+  errorMessage.textContent = '';
+
+  if (role === 'admin' && password === 'CBA@2004') {
+    window.location.href = 'admin/report.html';
+  } else if (role === 'cashier' && password === 'CBC@2004') {
+    sessionStorage.setItem('selectedCashier', 'CASH001');
+    window.location.href = 'cashier/placeOrder.html';
+  } else {
+    errorMessage.textContent = 'Invalid role or password. Please try again.';
   }
+}
 
-  function checkLogin() {
-    const role = document.getElementById('roleSelect').value;
-    const password = document.getElementById('password').value;
-    const errorMessage = document.getElementById('error-message');
-
-    errorMessage.textContent = '';
-
-    if (role === 'admin' && password === 'CBA@2004') {
-      window.location.href = 'admin/admin.html';
-    } else if (role === 'cashier' && password === 'CBC@2004') {
-      window.location.href = 'cashier/cashier.html';
-    } else {
-      errorMessage.textContent = 'Invalid role or password. Please try again.';
-    }
+document.getElementById('password').addEventListener('keydown', function (event) {
+  if (event.key === 'Enter') {
+    checkLogin();
   }
+});
 
-  document.getElementById('password').addEventListener('keydown', function (event) {
-    if (event.key === 'Enter') {
-      checkLogin();
+function updateCashiersAndCustomers(orders, cashiers, customers) {
+  orders.forEach(order => {
+    const cashier = cashiers.find(cashier => cashier.id === order.cashierId);
+    if (cashier) {
+      cashier.orderCount++;
+      cashier.totalSales += order.totalPrice;
+    }
+
+    const customer = customers.find(customer => customer.id === order.customerId);
+    if (customer) {
+      customer.orderCount++;
+      customer.totalSpent += order.totalPrice; 
     }
   });
 
-  function updateCashiersAndCustomers(orders, cashiers, customers) {
-    orders.forEach(order => {
-        const cashier = cashiers.find(cashier => cashier.id === order.cashierId);
-        if (cashier) {
-            cashier.orderCount += 1;         
-            cashier.totalSales += order.totalPrice;
-        }
-
-        const customer = customers.find(customer => customer.id === order.customerId);
-        if (customer) {
-            customer.orderCount += 1;         
-            customer.totalSpent += order.totalPrice; 
-        }
-    });
-
-    localStorage.setItem('Cashiers', JSON.stringify(cashiers));
-    localStorage.setItem('Customers', JSON.stringify(customers));
+  localStorage.setItem('Cashiers', JSON.stringify(cashiers));
+  localStorage.setItem('Customers', JSON.stringify(customers));
 }
 
 window.onload = function() {
-    updateCashiersAndCustomers(orders, cashier, customer);
+  updateCashiersAndCustomers(orders, cashier, customer);
+  updatePasswordPlaceholder();
 };

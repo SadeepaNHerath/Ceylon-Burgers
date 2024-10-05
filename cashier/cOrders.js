@@ -1,7 +1,6 @@
-function loadOrders() {
-    const orders = JSON.parse(localStorage.getItem("OrderHistory")) || [];
+function loadOrders(orders) {
     const ordersContainer = document.getElementById('ordersContainer');
-    ordersContainer.innerHTML = ''; 
+    ordersContainer.innerHTML = '';
 
     orders.forEach((order, index) => {
         const card = document.createElement('div');
@@ -27,13 +26,32 @@ function loadOrders() {
     });
 }
 
+function filterOrders() {
+    const selectedDate = document.getElementById('orderDate').value;
+    const orders = JSON.parse(localStorage.getItem("OrderHistory")) || [];
+    
+    if (selectedDate) {
+        const filteredOrders = orders.filter(order => order.date === selectedDate);
+        loadOrders(filteredOrders);
+    } else {
+        loadOrders(orders);  
+    }
+}
+
+function showAllOrders() {
+     
+    document.getElementById('orderDate').value = '';
+    const orders = JSON.parse(localStorage.getItem("OrderHistory")) || [];
+    loadOrders(orders);
+}
+
 function toggleOrderDetails(orderIndex) {
     const orderDetails = document.getElementById(`order-details-${orderIndex}`);
     orderDetails.classList.toggle('d-none');
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    loadOrders();
+    loadOrders(JSON.parse(localStorage.getItem("OrderHistory")) || []);
     const orderCards = document.querySelectorAll('.order-card');
     orderCards.forEach(card => {
         card.style.cursor = 'pointer';

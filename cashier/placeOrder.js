@@ -12,7 +12,12 @@ let currentCustomer = null;
 function suggestItems() {
     let input = document.getElementById('itemInput').value.toLowerCase();
     let suggestionsList = document.getElementById('suggestions');
-    suggestionsList.innerHTML = ''; 
+    suggestionsList.innerHTML = '';
+
+    if (input.length === 0) {
+        suggestionsList.style.display = 'none';
+        return;
+    }
 
     let suggestions = foodItems.filter(item =>
         item.id.toLowerCase().startsWith(input) || item.name.toLowerCase().startsWith(input)
@@ -42,8 +47,13 @@ function suggestCustomers() {
     let suggestionsList = document.getElementById('customerSuggestions');
     suggestionsList.innerHTML = '';
 
+     if (input.length === 0) {
+        suggestionsList.style.display = 'none';
+        return;
+    }
+
     let suggestions = customers.filter(customer =>
-        customer.phone.toLowerCase().startsWith(input) || customer.id.toLowerCase().startsWith(input)
+        customer.phone.toLowerCase().startsWith(input) || customer.name.toLowerCase().startsWith(input)
     );
 
     if (suggestions.length > 0) {
@@ -123,6 +133,14 @@ function addItemToOrder() {
     let item = foodItems.find(item => item.name === itemName);
 
     if (item) {
+         const currentDate = new Date();
+        const expirationDate = new Date(item.expiration_date);
+
+        if (expirationDate < currentDate) {
+            alert(`${item.name} is expired! You cannot add it to the order.`);
+            return;  
+        }
+
         let quantityInput = document.getElementById('quantity');
         let quantityToAdd = parseInt(quantityInput.value) || 1;
 
@@ -142,6 +160,7 @@ function addItemToOrder() {
         alert("Item not found! Please select an item from suggestions.");
     }
 }
+
 
 function updateOrderList() {
     let orderList = document.getElementById('order-summary');
@@ -369,29 +388,39 @@ function reduceItemQuantities(itemsOrdered) {
 }
 
 
-function updateTotals(orderTotal, itemsOrdered) {
-    let totalSales = parseFloat(localStorage.getItem('totalSales')) || 0;
-    let totalOrders = parseInt(localStorage.getItem('totalOrders')) || 0;
-    let discountItems = parseInt(localStorage.getItem('discountItems')) || 0;
+function updateTotals() {
+    const orders = JSON.parse(localStorage.getItem('OrderHistory')) || [];
+    const selectedCashierId = sessionStorage.getItem('selectedCashier');
+    const today = new Date().toISOString().split('T')[0];  
 
-    totalSales += orderTotal;
-    totalOrders += 1;
-    discountItems += itemsOrdered.filter(item => item.discount).length;
+    let totalSales = 0;
+    let totalOrders = 0;
+    let discountItems = 0;
 
-    localStorage.setItem('totalSales', totalSales);
-    localStorage.setItem('totalOrders', totalOrders);
-    localStorage.setItem('discountItems', discountItems);
+    orders.forEach(order => {
+        const orderDate = new Date(order.date).toISOString().split('T')[0];  
 
-    document.getElementById('total-sales').textContent = `LKR ${totalSales}`;
+         if (order.cashierId === selectedCashierId && orderDate === today) {
+            totalSales += order.totalPrice; 
+            totalOrders++;  
+            discountItems += order.items.filter(item => item.discount).length;  
+        }
+    });
+
+     document.getElementById('total-sales').textContent = `LKR ${totalSales}`;
     document.getElementById('total-orders').textContent = totalOrders;
     document.getElementById('discount-items').textContent = discountItems;
 }
 
+
+
 window.onload = function() {
     updateDashboardTotals(); 
+    updateTotals();
 };
 
 document.getElementById('itemInput').addEventListener('input', suggestItems);
 document.getElementById('customerPhone').addEventListener('input', suggestCustomers);
 document.getElementById('newCustomerCheckbox').addEventListener('change', toggleNewCustomerForm);
 document.getElementById('amountGiven').addEventListener('input', updateSummary);
+
