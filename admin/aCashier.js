@@ -7,7 +7,7 @@ function loadCashiers() {
         card.classList.add('col');
         card.innerHTML = `
             <div class="card text-center">
-                <img src="${cashier.photo || '../img/cashier.jpg'}" class="card-img-top" style="height: 100px; width: auto; margin: auto;">
+                <img src="${cashier.photo || '../img/cashier.webp'}" class="card-img-top" style="height: 100px; width: auto; margin: auto;">
                 <div class="card-body">
                     <h5 class="card-title">${cashier.name}</h5>
                     <p class="card-text">ID: ${cashier.id}<br>Phone: ${cashier.phone}<br>Address: ${cashier.address}<br>NIC: ${cashier.nic}</p>
@@ -54,7 +54,7 @@ function addCashier() {
         const cashierPhone = document.getElementById('cashierPhone').value;
         const cashierAddress = document.getElementById('cashierAddress').value;
         const cashierNic = document.getElementById('cashierNic').value;
-        const cashierPhoto = document.getElementById('cashierPhoto').value || '../img/cashier.jpg';
+        const cashierPhoto = document.getElementById('cashierPhoto').value || '../img/cashier.webp';
 
         const newCashier = {
             id: cashierId,
@@ -110,7 +110,7 @@ function updateCashier(index) {
         phone: document.getElementById('cashierPhone').value,
         address: document.getElementById('cashierAddress').value,
         nic: document.getElementById('cashierNic').value,
-        photo: document.getElementById('cashierPhoto').value || '../img/cashier.jpg',
+        photo: document.getElementById('cashierPhoto').value || '../img/cashier.webp',
         orderCount: cashiers[index].orderCount,
         totalSales: cashiers[index].totalSales
     };

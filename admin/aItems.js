@@ -87,7 +87,7 @@ function addItem() {
         quantity: parseInt(itemQuantity),
         price: parseFloat(itemPrice),
         discount: itemDiscount || null, 
-        img_url: itemImageUrl || '../img/items.jpeg', 
+        img_url: itemImageUrl || '../img/items.webp', 
         expiration_date: itemExpiration || 'N/A'
     };
 

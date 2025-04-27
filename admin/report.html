@@ -9,6 +9,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- Security headers -->
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
 </head>
 
 <body>
@@ -20,7 +24,10 @@
                     onclick="location.reload()">Monthly Reports</a>
                 <a href="aItems.html" class="text-white text-decoration-none d-block py-2">Food Items</a>
                 <a href="aOrders.html" class="text-white text-decoration-none d-block py-2">Orders</a>
-                <a href="aItems.html" class="text-white text-decoration-none d-block py-2">Cashiers</a>
+                <a href="aCashier.html" class="text-white text-decoration-none d-block py-2">Cashiers</a>
+                <a href="#" class="text-white text-decoration-none d-block py-2 text-danger mt-5" onclick="logout()">
+                    <i class="fas fa-sign-out-alt me-2"></i>Logout
+                </a>
             </div>
         </div>
 
@@ -28,7 +35,8 @@
             <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="#">Ceylon Burgers POS</a>
-                    <a href="../index.html" class="btn btn-outline-light ms-auto">Exit</a>
+                    <div id="security-status" class="me-3"></div>
+                    <button onclick="logout()" class="btn btn-outline-light ms-auto">Logout</button>
                 </div>
             </nav>
 
@@ -93,7 +101,22 @@
         </div>
     </div>
 
+    <!-- Load security and authentication scripts first -->
+    <script src="../utilities.js"></script>
+    <script src="../auth.js"></script>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Display security status badge
+        document.addEventListener('DOMContentLoaded', function() {
+            const securityStatus = document.getElementById('security-status');
+            if (window.location.protocol === 'https:') {
+                securityStatus.innerHTML = '<span class="badge bg-success"><i class="fas fa-lock me-1"></i>Secure Connection</span>';
+            } else {
+                securityStatus.innerHTML = '<span class="badge bg-danger"><i class="fas fa-unlock me-1"></i>Insecure Connection</span>';
+            }
+        });
+    </script>
     <script src="report.js"></script>
 </body>
 
