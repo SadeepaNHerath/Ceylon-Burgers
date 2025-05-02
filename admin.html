@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin · Ceylon Burgers</title>
+  <link rel="icon" href="icon/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <div class="admin-app">
+    <aside class="admin-side">
+      <span class="brand" style="margin: 0.2rem 0.4rem 1rem;">
+        <img src="icon/android-chrome-192x192.png" alt="">
+        Admin
+      </span>
+      <a href="#dashboard" data-nav="dashboard" class="active">Dashboard</a>
+      <a href="#menu" data-nav="menu">Menu</a>
+      <a href="#cashiers" data-nav="cashiers">Cashiers</a>
+      <a href="#customers" data-nav="customers">Customers</a>
+      <a href="#orders" data-nav="orders">Orders</a>
+      <a href="#reports" data-nav="reports">Reports</a>
+      <a href="pos.html">Open POS</a>
+      <button class="nav" id="btn-logout" type="button" style="margin-top: auto;">Logout</button>
+    </aside>
+    <main class="admin-main">
+      <div class="admin-top">
+        <div>
+          <h1 class="display" id="page-title" style="margin: 0;">Dashboard</h1>
+          <div class="muted" id="user-label"></div>
+        </div>
+      </div>
+
+      <section class="admin-panel active" data-panel="dashboard">
+        <div class="kpis" id="kpis"></div>
+        <div class="form-grid">
+          <section class="panel">
+            <h3>Low stock</h3>
+            <div id="low-stock" class="muted">Loading…</div>
+          </section>
+          <section class="panel">
+            <h3>Recent orders</h3>
+            <div id="recent" class="muted">Loading…</div>
+          </section>
+        </div>
+      </section>
+
+      <section class="admin-panel" data-panel="menu">
+        <div class="toolbar">
+          <button class="btn btn-amber" id="btn-add-item" type="button">Add item</button>
+          <input id="filter" placeholder="Search items…">
+        </div>
+        <div class="panel table-wrap">
+          <table class="data">
+            <thead>
+              <tr><th></th><th>SKU</th><th>Name</th><th>Category</th><th>Price</th><th>Disc</th><th>Stock</th><th></th></tr>
+            </thead>
+            <tbody id="item-rows"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="admin-panel" data-panel="cashiers">
+        <div class="toolbar">
+          <button class="btn btn-amber" id="btn-add-cashier" type="button">Add cashier</button>
+        </div>
+        <div class="panel table-wrap">
+          <table class="data">
+            <thead>
+              <tr><th></th><th>Name</th><th>Username</th><th>Phone</th><th>Status</th><th></th></tr>
+            </thead>
+            <tbody id="cashier-rows"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="admin-panel" data-panel="customers">
+        <div class="panel table-wrap">
+          <table class="data">
+            <thead>
+              <tr><th>Name</th><th>Phone</th><th>Orders</th><th>Spent</th></tr>
+            </thead>
+            <tbody id="customer-rows"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="admin-panel" data-panel="orders">
+        <div class="toolbar">
+          <input type="date" id="from">
+          <input type="date" id="to">
+          <input id="q" placeholder="Order no or customer">
+          <button class="btn btn-amber" id="btn-filter" type="button">Filter</button>
+        </div>
+        <div class="panel table-wrap">
+          <table class="data">
+            <thead>
+              <tr><th>Order</th><th>Time</th><th>Customer</th><th>Cashier</th><th>Total</th><th></th></tr>
+            </thead>
+            <tbody id="order-rows"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="admin-panel" data-panel="reports">
+        <div class="toolbar">
+          <select id="month"></select>
+          <input type="number" id="year" min="2020" max="2100">
+          <button class="btn btn-amber" id="btn-run" type="button">Generate</button>
+          <button class="btn btn-ghost" id="btn-pdf" type="button">Download PDF</button>
+        </div>
+        <div class="kpis" id="report-kpis"></div>
+        <div class="form-grid">
+          <section class="panel">
+            <h3>Items sold</h3>
+            <div class="table-wrap"><table class="data"><tbody id="report-items"></tbody></table></div>
+          </section>
+          <section class="panel">
+            <h3>Customers</h3>
+            <div class="table-wrap"><table class="data"><tbody id="report-customers"></tbody></table></div>
+          </section>
+          <section class="panel full">
+            <h3>Cashiers</h3>
+            <div class="table-wrap"><table class="data"><tbody id="report-cashiers"></tbody></table></div>
+          </section>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal" id="item-modal">
+    <form class="modal-card" id="item-form">
+      <h2 id="item-title">Add item</h2>
+      <input type="hidden" name="recordId">
+      <div class="form-grid" style="margin-top: 1rem;">
+        <label class="field full"><span>Name</span><input name="name" required></label>
+        <label class="field"><span>Category</span>
+          <select name="category" id="item-category"></select>
+        </label>
+        <label class="field"><span>Price (LKR)</span><input name="price" type="number" min="0" required></label>
+        <label class="field"><span>Stock</span><input name="stock" type="number" min="0" required></label>
+        <label class="field"><span>Discount %</span><input name="discount_pct" type="number" min="0" max="90" value="0"></label>
+        <label class="field"><span>Available</span>
+          <select name="available">
+            <option value="1">On menu</option>
+            <option value="0">Hidden</option>
+          </select>
+        </label>
+        <label class="field full"><span>Image path</span><input name="image" placeholder="img/BUR001.webp"></label>
+        <label class="field full"><span>Or upload image</span><input name="imageFile" type="file" accept="image/*"></label>
+      </div>
+      <p class="error" id="item-error" hidden></p>
+      <div class="toolbar" style="margin-top: 1rem;">
+        <button class="btn btn-amber" type="submit">Save</button>
+        <button class="btn btn-ghost" type="button" id="btn-cancel-item">Cancel</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="modal" id="cashier-modal">
+    <form class="modal-card" id="cashier-form">
+      <h2 id="cashier-title">Add cashier</h2>
+      <input type="hidden" name="recordId">
+      <div class="form-grid" style="margin-top: 1rem;">
+        <label class="field"><span>Name</span><input name="name" required></label>
+        <label class="field"><span>Phone</span><input name="phone"></label>
+        <label class="field full"><span>Address</span><input name="address"></label>
+        <label class="field"><span>NIC</span><input name="nic"></label>
+        <label class="field"><span>Photo path</span><input name="photo" placeholder="img/cashier.webp"></label>
+        <label class="field"><span>Username</span><input name="username" required></label>
+        <label class="field"><span>Password</span><input name="password" type="password" placeholder="Leave blank to keep"></label>
+        <label class="field"><span>Active</span>
+          <select name="active"><option value="1">Active</option><option value="0">Disabled</option></select>
+        </label>
+      </div>
+      <p class="error" id="cashier-error" hidden></p>
+      <div class="toolbar" style="margin-top: 1rem;">
+        <button class="btn btn-amber" type="submit">Save</button>
+        <button class="btn btn-ghost" type="button" id="btn-cancel-cashier">Cancel</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="modal" id="order-modal">
+    <div class="modal-card" style="width:min(520px,100%)">
+      <div id="order-detail"></div>
+      <button class="btn btn-ghost" id="btn-close-order" type="button">Close</button>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
